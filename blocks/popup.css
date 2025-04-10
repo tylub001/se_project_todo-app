@@ -127,6 +127,11 @@
   margin-top: 8px;
 }
 
+.todo.completed .todo__name {
+  text-decoration: line-through;
+  color: gray;
+}
+
 .popup__button {
   width: 100%;
   padding: 12px 0;
