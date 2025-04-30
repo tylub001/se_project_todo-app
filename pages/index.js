@@ -15,21 +15,28 @@ function handleCheck(completed) {
   todoCounter.updateCompleted(completed);
 }
 
+function handleDelete(todoElement, todoCounter) {
+  todoElement.remove();
+  todoCounter.updateTotal(false);
+}
+
 const newTodoValidator = new FormValidator(validationConfig, addTodoForm);
 newTodoValidator.enableValidation();
 
 const generateTodo = (data) => {
-  const todo = new Todo(data, "#todo-template", handleCheck, todoCounter);
+  const todo = new Todo(data, "#todo-template", handleCheck, todoCounter, handleDelete);
    return todo.getView();
   
 };
 
+const renderTodo = (item) => {
+  const todoElement = generateTodo(item);
+  section.addItem(todoElement);
+};
+
 const section = new Section({
   items: initialTodos,
-  renderer: (item) => {
-    const todoElement = generateTodo(item);
-    section.addItem(todoElement);
-  },
+  renderer: renderTodo, 
   containerSelector: ".todos__list",
 });
 
@@ -45,13 +52,12 @@ const todoPopup = new PopupWithForm({
       date: new Date(inputValues.date),
       completed: false,
     };
-    const todoElement = generateTodo(newTodo);
-    section.addItem(todoElement);
+    renderTodo(newTodo);
     todoCounter.updateTotal(true);
 
     todoPopup.close();
   },
-  validator: newTodoValidator,
+
 });
 
 todoPopup.setEventListeners();

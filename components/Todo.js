@@ -1,19 +1,19 @@
 export default class Todo {
-  constructor(data, templateSelector, handleCheck, todoCounter) {
+  constructor(data, templateSelector, handleCheck, todoCounter, handleDelete) {
     this._data = data;
     this._templateElement = document.querySelector(templateSelector);
     this._handleCheck = handleCheck;
     this._todoCounter = todoCounter;
+    this._handleDelete = handleDelete;
   }
 
   _addDeleteButtonListener() {
     this._todoDeleteBtn = this._todoElement.querySelector(".todo__delete-btn");
     this._todoDeleteBtn.addEventListener("click", () => {
+      this._handleDelete(this._todoElement, this._todoCounter);
       if (this._data.completed) {
         this._handleCheck(false);
       }
-      this._todoElement.remove();
-      this._todoCounter.updateTotal(false);
     });
   }
 
