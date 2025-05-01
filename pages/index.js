@@ -15,7 +15,7 @@ function handleCheck(completed) {
   todoCounter.updateCompleted(completed);
 }
 
-function handleDelete(todoElement, todoCounter) {
+function handleDelete(todoElement) {
   todoElement.remove();
   todoCounter.updateTotal(false);
 }
@@ -24,7 +24,7 @@ const newTodoValidator = new FormValidator(validationConfig, addTodoForm);
 newTodoValidator.enableValidation();
 
 const generateTodo = (data) => {
-  const todo = new Todo(data, "#todo-template", handleCheck, todoCounter, handleDelete);
+  const todo = new Todo(data, "#todo-template", handleCheck, handleDelete);
    return todo.getView();
   
 };
